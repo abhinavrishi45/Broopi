@@ -10,10 +10,10 @@ import categoriesAc from '../assets/categoriesAc.png';
 import Electrician from '../assets/Electrician.png';
 
 const services = [
-  { label: 'Pest Controlling', icon: categoriespest, path: '/service/pestcontroling' },
-  { label: 'Bathroom Cleaning', icon: categoriesbathroom, path: '/service/Bathroom' },
-  { label: 'Home Cleaning ', icon: categoriesHome, path: '/service/Homecleaning' },
-  { label: 'Ac Services', icon: categoriesAc, path: '/service/Ac' },
+  { label: 'Pest Controlling', icon: categoriespest, path: '/service/PestControlling' },
+  { label: 'Bathroom Cleaning', icon: categoriesbathroom, path: '/service/BathroomCleaning' },
+  { label: 'Home Cleaning ', icon: categoriesHome, path: '/service/HomeCleaning' },
+  { label: 'Ac Services', icon: categoriesAc, path: '/service/ACService' },
   { label: 'Plumber', icon: categoriesplumber, path: '/service/Plumber' },
   { label: 'Electrician', icon: Electrician, path: '/service/Electrician' },
 ];

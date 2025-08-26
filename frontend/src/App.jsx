@@ -15,6 +15,8 @@ import Checkout from './Component/pages/Checkout';
 import Myprofile from './Component/pages/Myprofile';
 import HelpCenter from './Component/pages/HelpCenter';
 import GetLocation from './Component/pages/GetLocation';
+import Electrician from './Component/service/Electrician';
+import Aboutus from './Component/footer/Aboutus';
 // import Address from './Component/pages/Address';
 
 const App = () => {
@@ -66,16 +68,19 @@ const App = () => {
           <Route path="/" element={<Hero />} />
           <Route path="/services" element={<ServiceHero />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/service/pestcontroling" element={<PestControling />} />
-          <Route path="/service/Ac" element={<Ac />} />
-          <Route path="/service/Bathroom" element={<Bathroom />} />
-          <Route path="/service/Homecleaning" element={<Homecleaning />} />
+          <Route path="/service/PestControlling" element={<PestControling />} />
+          <Route path="/service/ACService" element={<Ac />} />
+          <Route path="/service/BathroomCleaning" element={<Bathroom />} />
+          <Route path="/service/HomeCleaning" element={<Homecleaning />} />
           <Route path="/service/Plumber" element={<Plumber />} />
+          <Route path="/service/Electrician" element={<Electrician />} />
           <Route path="/userprofile" element={<Myprofile />} />
           <Route path="/helpcenter" element={<HelpCenter />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/location" element={<GetLocation />} />
           {/* <Route path="/address" element={<Address />} /> */}
+
+          <Route path='/aboutus' element={<Aboutus/>}/>
         </Routes>
       </div>
     </>

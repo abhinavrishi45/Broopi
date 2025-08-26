@@ -22,7 +22,7 @@ import AcService from './Pages/AcService'
 import Plumber from './Pages/Plumber'
 import HomeCard from './Pages/HomeCard';
 import Allproducts from './Pages/Allproducts';
-
+import AboutUs from './Pages/AboutUs'
 function App() {
   return (
     <AuthProvider>
@@ -37,7 +37,7 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route path='HomeCard' element={<HomeCard/>} />
+            <Route path='HomeCard' element={<HomeCard />} />
             <Route path='contact' element={<Contact />} />
             <Route path='invoice' element={<Invoice />} />
             <Route path='calender' element={<Calender />} />
@@ -55,6 +55,7 @@ function App() {
             <Route path='ac-service' element={<AcService />} />
             <Route path='plumber' element={<Plumber />} />
             <Route path='all-products' element={<Allproducts />} />
+            <Route path='aboutUs' element={<AboutUs />} />
           </Route>
         </Routes>
       </Router>

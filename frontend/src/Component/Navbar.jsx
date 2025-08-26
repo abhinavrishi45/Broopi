@@ -10,6 +10,7 @@ import axios from 'axios';
 import closeicon from '../assets/close_icon.svg';
 import { IoLocationOutline } from 'react-icons/io5';
 import Userprofile from './pages/Userprofile';
+import searchcat from '../assets/assets1.png'
 
 
 const Navbar = ({ onLoginClick, user }) => {
@@ -23,6 +24,8 @@ const Navbar = ({ onLoginClick, user }) => {
   const autocompleteRef = useRef(null);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const [searchdown, setSearchdown] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   // useEffect(() => {
   //   const storedUser = localStorage.getItem('user');
@@ -84,6 +87,15 @@ const Navbar = ({ onLoginClick, user }) => {
     }
   }, [locationpopup]);
 
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/product/allproducts/onepercategory")
+      .then((res) => {
+        const cate = res.data.map((p) => p.category);
+        setCategories(cate);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
     <>
       <nav className="bg-white-600 p-4 flex gap-6 flex-col sm:flex-row items-center shadow-md ">
@@ -104,16 +116,64 @@ const Navbar = ({ onLoginClick, user }) => {
           <img className="w-11 h-6 px-2" src={downarrow} alt="" />
         </form>
 
-        <form onSubmit={handleSearch} className="flex items-center border rounded-xl w-full sm:w-auto">
+        {/* <form onSubmit={handleSearch} className="flex items-center border rounded-xl w-full sm:w-auto">
           <img className='ml-3 w-6 h-6' src={searchicon} alt="" />
           <input
             type="text"
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onFocus={() => setSearchdown(true)}
+            onBlur={() => setTimeout(() => setSearchdown(false), 150)}
             className="p-2 rounded-l-md w-full py-3 sm:w-64 outline-none"
           />
-        </form>
+          {searchdown && categories.length > 0 && (
+            <div className="relative flex flex-col items-center border rounded-xl w-full sm:w-auto">
+              {categories.map((cat, i) => (
+                <div
+                  key={i}
+                  onClick={() => navigate(`/category/${cat.toLowerCase()}`)}
+                  className="flex items-center gap-2 p-3 cursor-pointer hover:bg-purple-100"
+                >
+                  <img src={searchicon} alt="" className="w-4 h-4" />
+                  <span>{cat}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </form> */}
+        <div className="relative w-full sm:w-auto">
+          <form
+            onSubmit={handleSearch}
+            className="flex items-center border rounded-xl w-full sm:w-auto"
+          >
+            <img className="ml-3 w-6 h-6" src={searchicon} alt="" />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onFocus={() => setSearchdown(true)}
+              onBlur={() => setTimeout(() => setSearchdown(false), 150)}
+              className="p-2 rounded-l-md w-full py-3 sm:w-64 outline-none"
+            />
+          </form>
+
+          {searchdown && categories.length > 0 && (
+            <div className="absolute top-full left-0 mt-1 w-full sm:w-64 border border-gray-200 py-5 rounded-xl bg-white shadow-lg z-10">
+              {categories.map((cat, i) => (
+                <div
+                  key={i}
+                  onClick={() => navigate(`/service/${cat.category}`)}
+                  className="flex items-center gap-2 p-3 cursor-pointer hover:bg-purple-100 border border-gray-200 mt-2 ml-5 rounded mr-5"                >
+                  <img src={searchcat} alt="" className="w-8 h-6" />
+                  <span className='ml-2'>{cat}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
 
         <img
           onClick={() => navigate('/cart')}

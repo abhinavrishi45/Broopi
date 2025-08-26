@@ -23,6 +23,7 @@ const Sidebar = () => {
     { label: 'Kitchen Cleaning', path: '/home/kitchen-cleaning' },
     { label: 'Ac Service', path: '/home/ac-service' },
     { label: 'Plumber', path: '/home/plumber' },
+    {label: 'About Us' , path: '/home/aboutUs'}
   ];
 
   return (

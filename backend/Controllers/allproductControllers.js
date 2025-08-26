@@ -66,3 +66,47 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+exports.getOneProductPerCategory = async (req, res) => {
+  try {
+    const products = await AllProduct.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          product: { $first: "$$ROOT" }
+        }
+      },
+      { $replaceRoot: { newRoot: "$product" } }
+    ]);
+
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+exports.getOneProductPerSubcategory = async (req, res) => {
+  try {
+    const products = await AllProduct.aggregate([
+      {
+        $group: {
+          _id: "$subcategory",
+          product: { $first: "$$ROOT" }
+        }
+      },
+      { $replaceRoot: { newRoot: "$product" } }
+    ]);
+
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+exports.getProductsByCategory = async (req, res) => {
+  try {
+    const { category } = req.params;
+    const products = await AllProduct.find({ category });
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
