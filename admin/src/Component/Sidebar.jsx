@@ -17,13 +17,9 @@ const Sidebar = () => {
     { label: 'Reviews', path: '/home/review' },
     { label: 'UI', path: '/home/ui' },
     { label: 'All Products', path: '/home/all-products' },
-    { label: 'Pest Controlling', path: '/home/pestcontrolling' },
-    { label: 'Bathroom Cleaning', path: '/home/bathroom-cleaning' },
-    { label: 'Home Cleaning', path: '/home/home-cleaning' },
-    { label: 'Kitchen Cleaning', path: '/home/kitchen-cleaning' },
-    { label: 'Ac Service', path: '/home/ac-service' },
-    { label: 'Plumber', path: '/home/plumber' },
-    {label: 'About Us' , path: '/home/aboutUs'}
+    { label: 'First Card', path: '/home/FirstCard' },
+    { label : 'Long Banner', path:'/home/longBanner'},
+    { label: 'About Us', path: '/home/aboutUs' }
   ];
 
   return (

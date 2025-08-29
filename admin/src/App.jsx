@@ -14,15 +14,11 @@ import Authentication from './Pages/Authentication'
 import Review from './Pages/Review'
 import UI from './Pages/UI'
 import HomeUi from './Pages/HomeUi'
-import PestControlling from './Pages/PestControlling'
-import Bathroom from './Pages/Bathroom'
-import HomeCleaning from './Pages/HomeCleaning'
-import KitchenCleaning from './Pages/KitchenCleaning'
-import AcService from './Pages/AcService'
-import Plumber from './Pages/Plumber'
 import HomeCard from './Pages/HomeCard';
 import Allproducts from './Pages/Allproducts';
 import AboutUs from './Pages/AboutUs'
+import FirstCard from './Pages/FirstCard';
+import LongBanner from './Pages/LongBanner';
 function App() {
   return (
     <AuthProvider>
@@ -48,12 +44,8 @@ function App() {
             <Route path='review' element={<Review />} />
             <Route path='ui' element={<UI />} />
             <Route path='homeui' element={<HomeUi />} />
-            <Route path='pestcontrolling' element={<PestControlling />} />
-            <Route path='bathroom-cleaning' element={<Bathroom />} />
-            <Route path='home-cleaning' element={<HomeCleaning />} />
-            <Route path='kitchen-cleaning' element={<KitchenCleaning />} />
-            <Route path='ac-service' element={<AcService />} />
-            <Route path='plumber' element={<Plumber />} />
+            <Route path='firstCard' element={<FirstCard />} />
+            <Route path='longBanner' element={<LongBanner />} />
             <Route path='all-products' element={<Allproducts />} />
             <Route path='aboutUs' element={<AboutUs />} />
           </Route>

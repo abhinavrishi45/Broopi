@@ -103,10 +103,13 @@ exports.getOneProductPerSubcategory = async (req, res) => {
 };
 exports.getProductsByCategory = async (req, res) => {
   try {
-    const { category } = req.params;
+    const { category } = req.query;
+    if (!category) {
+      return res.status(400).json({ message: "Category is required" });
+    }
     const products = await AllProduct.find({ category });
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

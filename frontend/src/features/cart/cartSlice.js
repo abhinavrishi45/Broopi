@@ -8,10 +8,22 @@ export const fetchCart = createAsyncThunk("cart/fetchCart", async (userId) => {
   return res.data.items || [];
 });
 
-export const addToCart = createAsyncThunk("cart/addToCart", async ({ userId, productId }) => {
-  const res = await axios.post(`${API_URL}/add`, { userId, productId });
-  return res.data.items || [];
-});
+export const addToCart = createAsyncThunk(
+  "cart/addToCart",
+  async ({ userId, productId }, { rejectWithValue }) => {
+    try {
+      if (!userId) {
+        return rejectWithValue("User not logged in");
+      }
+
+      const res = await axios.post(`${API_URL}/add`, { userId, productId });
+      return res.data.items || [];
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Failed to add item");
+    }
+  }
+);
+
 
 export const updateQuantity = createAsyncThunk("cart/updateQuantity", async ({ userId, productId, action }) => {
   const res = await axios.patch(`${API_URL}/update`, { userId, productId, action });
@@ -51,6 +63,7 @@ const cartSlice = createSlice({
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
+        state.error = null;
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.loading = false;
@@ -58,9 +71,14 @@ const cartSlice = createSlice({
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.items = action.payload;
+        state.error = null;
+      })
+      .addCase(addToCart.rejected, (state, action) => {
+        state.error = action.payload || action.error.message;
       })
       .addCase(updateQuantity.fulfilled, (state, action) => {
         state.items = action.payload;
+        state.error = null;
       });
   },
 });

@@ -1,17 +1,3 @@
-// const multer  = require('multer');
-// const path = require('path');
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) =>{
-//     cb(null, 'uploads/homeCard');
-//   },
-//   filename:(req, file, cb) =>{
-//     cb(null, `${Date.now()}-${file.originalname}`);
-
-//   }
-// });
-// const upload = multer({storage:storage});
-// module.exports = upload;
-
 const multer = require('multer');
 const path = require('path');
 
@@ -32,11 +18,35 @@ const storageHomeCard = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
+const storageFirstCard = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../uploads/FirstCard'));
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
 
+  }
+});
+const storagelongBanner = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../uploads/LongBanner'));
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+
+  }
+});
 const uploadAllProducts = multer({ storage: storageAllProducts });
 const uploadHomeCard = multer({ storage: storageHomeCard });
+const uploadFirstCard = multer({
+  storage:
+    storageFirstCard
+});
+const uploadlongBanner = multer({storage : storagelongBanner});
 
 module.exports = {
   uploadAllProducts,
-  uploadHomeCard
+  uploadHomeCard,
+  uploadFirstCard,
+  uploadlongBanner
 };

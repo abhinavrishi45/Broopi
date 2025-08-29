@@ -104,7 +104,7 @@ const Navbar = ({ onLoginClick, user }) => {
           <img onClick={() => navigate('/')} className="w-50 cursor-pointer" src={newlastlogo} alt="" />
         </div>
 
-        <form className="ml-20 flex items-center border rounded-xl w-full sm:w-auto  cursor-pointer">
+        <form className="ml-20 flex items-center border border-gray-200 rounded-xl w-full sm:w-auto cursor-pointer">
           <img className='ml-3 w-6 h-6' src={locat} alt="" />
           <input
             type="text"
@@ -145,7 +145,7 @@ const Navbar = ({ onLoginClick, user }) => {
         <div className="relative w-full sm:w-auto">
           <form
             onSubmit={handleSearch}
-            className="flex items-center border rounded-xl w-full sm:w-auto"
+            className="flex items-center border border-gray-200 rounded-xl w-full sm:w-auto"
           >
             <img className="ml-3 w-6 h-6" src={searchicon} alt="" />
             <input
@@ -164,7 +164,7 @@ const Navbar = ({ onLoginClick, user }) => {
               {categories.map((cat, i) => (
                 <div
                   key={i}
-                  onClick={() => navigate(`/service/${cat.category}`)}
+                  onClick={() => navigate(`/service/${cat}`)}
                   className="flex items-center gap-2 p-3 cursor-pointer hover:bg-purple-100 border border-gray-200 mt-2 ml-5 rounded mr-5"                >
                   <img src={searchcat} alt="" className="w-8 h-6" />
                   <span className='ml-2'>{cat}</span>

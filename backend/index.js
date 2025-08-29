@@ -15,6 +15,8 @@ const allproductRoutes = require('./Routes/allproductRoutes');
 const homeCardRoutes = require('./Routes/homecardRoutes');
 const cartRoutes = require('./Routes/cartRoutes');
 const orderRoutes = require('./Routes/orderRoutes');
+const FirstCardRoutes = require('./Routes/FirstCardRoutes');
+const LongBannerRoutes = require('./Routes/longBannerRoutes');
 const app = express();
 
 app.use(cors({
@@ -37,12 +39,16 @@ app.use(passport.session());
 
 const PORT = process.env.PORT || 5000;
 
+app.use('/uploads/allproducts', express.static(path.join(__dirname, 'uploads/allproducts')));
+app.use('/uploads/FirstCard', express.static(path.join(__dirname, 'uploads/FirstCard')));
+app.use('/uploads/LongBanner', express.static(path.join(__dirname, 'uploads/LongBanner')));
+
 app.use('/api/auth', authRoutes);
-app.use('/uploads/homeCard', express.static(path.join(__dirname, 'uploads/homeCard')));
 app.use('/api/location', locationRoutes);
 app.use('/api/homecard', homeCardRoutes);
-app.use('/uploads/allproducts', express.static(path.join(__dirname, 'uploads/allproducts')));
 app.use('/api/product', allproductRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api', orderRoutes);
+app.use('/api', FirstCardRoutes);
+app.use('/api', LongBannerRoutes)
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

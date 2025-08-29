@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCart, addToCart, updateQuantity } from '../../features/cart/cartSlice';
 
-const HomeCleaning = () => {
+const HomeCleaning = ({ user, onLoginClick }) => {
   const [product, setProduct] = useState([]);
   // const [subcat, setSubcat]= useState([]);
   // const [cart, setCart] = useState([]);
@@ -110,9 +110,17 @@ const HomeCleaning = () => {
                 />
                 <button
                   className="border border-purple-300 rounded-2xl px-4 py-2 mt-3 text-purple-700 font-semibold hover:bg-purple-700 hover:text-white transition"
-                  onClick={() =>
+                  onClick={() => {
+                    if (!user) {
+                      onLoginClick();
+                      return;
+                    }
                     dispatch(addToCart({ userId, productId: product._id }))
-                  }
+                      .unwrap()
+                      .catch((err) => {
+                        alert(err);
+                      });
+                  }}
                 >
                   ADD
                 </button>

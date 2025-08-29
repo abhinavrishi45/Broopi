@@ -99,6 +99,7 @@ const Userprofile = ({ onClose }) => {
       await axios.post('/auth/logout');
       setUser(null);
       localStorage.removeItem("user");
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }

@@ -21,27 +21,34 @@ const services = [
 const ServiceHero = () => {
   const navigate = useNavigate();
   return (
-    <div className="max-w-8xl mx-auto px-4 py-10 grid grid-cols-2 gap-20 items-center">
-      <div className="border ml-15 border-gray-300 rounded-2xl p-6 shadow-sm bg-white">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Book Our Services</h2>
-        <div className="grid grid-cols-3 gap-4 px-2 py-2">
+
+     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      
+      <div className="border border-gray-200 rounded-2xl p-6 shadow-sm bg-white">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
+          Book Our Services
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {services.map((service, index) => (
-            <ServiceCard key={index}
+            <ServiceCard
+              key={index}
               label={service.label}
               icon={service.icon}
               path={service.path}
-              onClick={() => navigate(service.path)} />
+              onClick={() => navigate(service.path)}
+            />
           ))}
         </div>
       </div>
-      <div className=" w-full rounded-xl overflow-hidden shadow-lg">
+
+      <div className="w-full rounded-xl overflow-hidden shadow-lg">
         <video
           src={herovideo}
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover"
+          className="w-full h-44 sm:h-80 lg:h-full object-cover"
         />
       </div>
     </div>
