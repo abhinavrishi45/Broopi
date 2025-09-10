@@ -28,7 +28,7 @@ const Services = () => {
   const [homecard, setHomecard] = useState([]);
   const [cards, setCards] = useState([]);
   const [index, setIndex] = useState(0);
-  const [longBanner, setLongBanner] = useState([])
+  const [longBanner, setLongBanner] = useState([]);
 
   // useEffect(()=>{
   //   const fetchHomecard = async () =>{
@@ -65,7 +65,7 @@ const Services = () => {
     setIndex((prev) => (prev - 1 + cards.length) % cards.length);
 
   return (
-    <div className="px-4 sm:px-6 lg:px-12 py-10 space-y-16 max-w-7xl mx-auto">
+    <div className="px-4 sm:px-6 lg:px-12 py-10 space-y-16 max-w-7xl mx-auto mt-10">
 
       <div className="relative w-full">
         {cards.length > 0 && (
@@ -113,7 +113,7 @@ const Services = () => {
         )}
       </div>
 
-      <section>
+      <section className='mt-25'>
         <h2 className="text-2xl sm:text-3xl font-bold mb-8">Super Saver Services</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           {[Sofaclean, Carpenter, acservicing, kitchenclean, homecleaning].map((img, i) => (
@@ -128,7 +128,7 @@ const Services = () => {
         </div>
       </section>
 
-      <section>
+      <section className='mt-25'>
         {longBanner[0] && (
           <img
             onClick={() => navigate(`/service/${longBanner[0].category}`)}
@@ -139,13 +139,17 @@ const Services = () => {
         )}
       </section>
 
-      <section>
+      <section className='mt-25'>
         <h2 className="text-2xl sm:text-3xl font-bold mb-8">Clean in just One Click</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-25 lg:w-full">
           {homecard.map((item) => (
             <div
               key={item._id}
-              onClick={() => navigate(`/service/${item.category}`)}
+              onClick={() =>
+                navigate(`/service/${item.category?.name.replace(/\s+/g, "")}`)
+              }
+
+
               className="bg-gray-100 rounded shadow-md overflow-hidden cursor-pointer hover:scale-105 transition lg:w-60"
             >
               <img
@@ -155,7 +159,7 @@ const Services = () => {
               />
               <div className="p-2">
                 <p className="text-lg font-bold">{item.name}</p>
-                <p className="text-sm font-medium text-gray-600">{item.category}</p>
+                <p className="text-sm font-medium text-gray-700">{item.category?.name}</p>
                 <div className="flex items-center space-x-1 text-sm">
                   <img className="h-4 w-4" src={star} alt="rating" />
                   <p>0 (0K)</p>
@@ -167,7 +171,7 @@ const Services = () => {
           ))}
         </div>
       </section>
-      <section>
+      <section className='mt-25'>
         {longBanner[1] && (
           <img
             onClick={() => navigate(`/service/${longBanner[1].category}`)}
@@ -177,7 +181,7 @@ const Services = () => {
           />
         )}
       </section>
-      <section>
+      <section className='mt-25'>
         <h2 className="text-2xl sm:text-3xl font-bold mb-8">Electrician and AC Services</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           {[EACone, EACtwo, EACthree, EACfour, EACfive].map((img, i) => (
@@ -191,7 +195,7 @@ const Services = () => {
           ))}
         </div>
       </section>
-      <section>
+      <section className='mt-25'>
         {longBanner[2] && (
           <img
             onClick={() => navigate(`/service/${longBanner[2].category}`)}
@@ -203,7 +207,7 @@ const Services = () => {
       </section>
 
 
-      <section>
+      <section className='mt-25'>
         <h2 className="text-2xl sm:text-3xl font-bold mb-8">Reliable Services</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           {[RSone, RStwo, RSthree, RSfour].map((img, i) => (
@@ -218,7 +222,7 @@ const Services = () => {
         </div>
       </section>
 
-      <section>
+      <section className='mt-25'>
         {longBanner[3] && (
           <img
             onClick={() => navigate(`/service/${longBanner[3].category}`)}
@@ -229,7 +233,7 @@ const Services = () => {
         )}
       </section>
 
-      <section>
+      <section className='mt-25'>
         <h2 className="text-2xl sm:text-3xl font-bold mb-8">Reliable Services</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           {[AOIone, AOItwo, AOIthree, AOIfour, AOIfive].map((img, i) => (

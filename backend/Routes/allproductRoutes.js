@@ -9,7 +9,8 @@ const {
   deleteProduct,
   getOneProductPerCategory,
   getOneProductPerSubcategory,
-  getProductsByCategory
+  getProductsByCategory,
+  searchProducts,
 } = require('../Controllers/allproductControllers');
 
 router.post('/allproducts', uploadAllProducts.single('image'), createAllProduct);
@@ -19,5 +20,6 @@ router.delete('/allproducts/:id', deleteProduct);
 router.get('/allproducts/onepercategory', getOneProductPerCategory);
 router.get('/allproducts/onepersubcategory', getOneProductPerSubcategory);
 router.get('/allproducts/category/:category', getProductsByCategory);
+router.get('/allproducts/search', searchProducts);
 
 module.exports = router;

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Allproducts = () => {
-  // const [category, setCategory] = useState("");
-  const [subcategory, setsubCategory] = useState("");
+  const [categories, setCategories] = useState([]); 
+  const [subcategories, setSubcategories] = useState([]);
   const [showproduct, setShowproduct] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
@@ -14,22 +14,33 @@ const Allproducts = () => {
     oldPrice: "",
     image: null,
     description: "",
+    description1: ""
   });
   const [editingId, setEditingId] = useState(null);
-  const categoryOptions = {
-    PestControlling: ["General Pest Control", "Termite Control"],
-    BathroomCleaning: ["Premium", "Basic"],
-    HomeCleaning: ["Furnished apartment (Basic)", "Furnished apartment (Premium)", "UnFurnished apartment (Basic)", "UnFurnished apartment (Basic)", "Furnished Bungalow(Basic)", "Furnished Bungalow(Premium)"],
-    ACService: ["Ac-Service", "Ac Installation & Unistallation", "AcRepair & Gas refill"],
-    Plumber: ["Residential", "Commercial", "Industrial"],
-    Electrician: ["Service", "Construction Electricians", "Maintenance Electricians"]
-  }
+  const fetchCategories = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/category");
+      setCategories(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchSubcategories = async (categoryId) => {
+    if (!categoryId) return;
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/api/subcategory/${categoryId}`
+      );
+      setSubcategories(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const fetchHomeproduct = async () => {
     try {
       const res = await axios.get(
         "http://localhost:5000/api/product/allproducts"
-
       );
       setShowproduct(res.data);
     } catch (err) {
@@ -39,6 +50,7 @@ const Allproducts = () => {
 
   useEffect(() => {
     fetchHomeproduct();
+    fetchCategories();
   }, []);
 
   const handleChange = (e) => {
@@ -53,18 +65,9 @@ const Allproducts = () => {
     e.preventDefault();
 
     const data = new FormData();
-    data.append("name", formData.name);
-    data.append("category", formData.category);
-    data.append("subcategory", formData.subcategory);
-    data.append("time", formData.time);
-    data.append("newPrice", formData.newPrice);
-    data.append("oldPrice", formData.oldPrice);
-    data.append("description", formData.description);
-
-    // Append image only if selected
-    if (formData.image) {
-      data.append("image", formData.image);
-    }
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value) data.append(key, value);
+    });
 
     try {
       if (editingId) {
@@ -75,11 +78,9 @@ const Allproducts = () => {
         );
         alert("Product updated successfully");
       } else {
-        await axios.post(
-          "http://localhost:5000/api/product/allproducts",
-          data,
-          { headers: { "Content-Type": "multipart/form-data" } }
-        );
+        await axios.post("http://localhost:5000/api/product/allproducts", data, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
         alert("Product uploaded successfully");
       }
 
@@ -92,6 +93,7 @@ const Allproducts = () => {
         oldPrice: "",
         image: null,
         description: "",
+        description1: "",
       });
       setEditingId(null);
       fetchHomeproduct();
@@ -101,12 +103,11 @@ const Allproducts = () => {
     }
   };
 
-
   const deleteHomeproduct = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/api/product/allproducts/${id}`);
       setShowproduct((prev) => prev.filter((item) => item._id !== id));
-      alert("Homeproduct deleted successfully");
+      alert("Product deleted successfully");
     } catch (error) {
       console.error(error);
       alert("Delete failed");
@@ -116,23 +117,27 @@ const Allproducts = () => {
   const handleEditClick = (product) => {
     setFormData({
       name: product.name,
-      category: product.category,
-      subcategory: product.subcategory,
+      category: product.category?._id || product.category,
+      subcategory: product.subcategory?._id || product.subcategory,
       time: product.time,
       newPrice: product.newPrice,
       oldPrice: product.oldPrice,
       image: null,
-      description: product.description
+      description: product.description,
+      description1: product.description1
     });
     setEditingId(product._id);
+    fetchSubcategories(product.category?._id || product.category);
   };
 
   return (
     <div>
       <p className="text-center text-xl mt-10 font-semibold font-serif">
-        This is the All-product page where Admin can upload or edit home products and access Category
+        This is the All-product page where Admin can upload or edit home
+        products and access Category
       </p>
 
+    
       <div className="flex justify-center mt-10">
         <div className="p-8 bg-purple-100 border flex justify-center rounded-2xl mt-5">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -145,49 +150,42 @@ const Allproducts = () => {
               required
             />
             <br />
-
             <select
               className="bg-white ml-4 p-2 rounded mt-8 w-120 border"
               name="category"
-              type="text"
-              placeholder="Category"
               value={formData.category}
               onChange={(e) => {
-                // setCategory(e.target.value);
-                setFormData({ ...formData, category: e.target.value });
-                // handleChange;
-                setsubCategory("")
+                setFormData({ ...formData, category: e.target.value, subcategory: "" });
+                fetchSubcategories(e.target.value);
               }}
               required
             >
-              <option>-- Category --</option>
-              {Object.keys(categoryOptions).map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
+              <option value="">-- Category --</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
                 </option>
               ))}
             </select>
             <br />
+
             <select
               className="bg-white ml-4 p-2 rounded mt-8 w-120 border"
-              name="Subcategory"
-              type="text"
-              placeholder="subCategory"
+              name="subcategory"
               value={formData.subcategory}
-              onChange={(e) =>
-                setFormData({ ...formData, subcategory: e.target.value })
-              }
+              onChange={handleChange}
               disabled={!formData.category}
               required
             >
               <option value="">-- Sub-category --</option>
-              {formData.category && categoryOptions[formData.category].map((sub) => (
-                <option key={sub} value={sub}>
-                  {sub}
+              {subcategories.map((sub) => (
+                <option key={sub._id} value={sub._id}>
+                  {sub.name}
                 </option>
               ))}
             </select>
             <br />
+
             <input
               className="bg-white ml-4 p-2 rounded mt-8 w-120 border"
               name="time"
@@ -198,7 +196,6 @@ const Allproducts = () => {
               required
             />
             <br />
-
 
             <input
               className="bg-white ml-4 p-2 rounded mt-8 w-120 border"
@@ -230,17 +227,25 @@ const Allproducts = () => {
               {...(!editingId ? { required: true } : {})}
             />
             <br />
-            <input
-              className="bg-white ml-4 p-2 rounded mt-8 w-120 h-30 border"
+
+            <textarea
+              className="bg-white ml-4 p-2 rounded mt-8 w-120 border"
               name="description"
-              type="text"
               placeholder="Description"
               value={formData.description}
               onChange={handleChange}
               required
             />
             <br />
-
+            <textarea
+              className="bg-white ml-4 p-2 rounded mt-8 w-120 border"
+              name="description1"
+              placeholder="Description"
+              value={formData.description1}
+              onChange={handleChange}
+              required
+            />
+            <br />
 
             <div className="flex items-center justify-center">
               <button
@@ -266,12 +271,17 @@ const Allproducts = () => {
               className="w-full h-60 object-cover"
             />
             <p className="text-xl font-bold ml-1">{product.name}</p>
-            <p className="font-semibold ml-1">{product.category}</p>
-            <p className="font-semibold ml-1">{product.subcategory}</p>
+            <p className="font-semibold ml-1">
+              {product.category?.name || product.category}
+            </p>
+            <p className="font-semibold ml-1">
+              {product.subcategory?.name || product.subcategory}
+            </p>
             <p className="font-semibold ml-1">{product.time}</p>
             <p className="font-bold ml-2">₹ {product.newPrice}</p>
             <p className="line-through ml-3 mb-2">₹ {product.oldPrice}</p>
-            <p className="font-bold ml-2"> {product.description}</p>
+            <p className="font-semibold ml-2">{product.description}</p>
+            <p className="font-semibold ml-2">{product.description1}</p>
 
             <div className="flex justify-center mt-5 gap-5 mb-5">
               <button

@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
       return this.authProvider === 'local';
     },
     minlength: 6
+  },
+  selectedAddress: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Address',
+    default: null
   }
 }, { timestamps: true });
 

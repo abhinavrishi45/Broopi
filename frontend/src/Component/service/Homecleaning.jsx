@@ -26,7 +26,7 @@ const HomeCleaning = ({ user, onLoginClick }) => {
     axios.get("http://localhost:5000/api/product/allproducts")
       .then(res => {
         const pestProducts = res.data.filter(
-          product => product.category === "HomeCleaning"
+          product => product.category?.name === "Home Cleaning & Kitchen Cleaning"
         );
         setProduct(pestProducts);
       })

@@ -26,7 +26,7 @@ const Electrician = ({ user, onLoginClick }) => {
     axios.get("http://localhost:5000/api/product/allproducts")
       .then(res => {
         const pestProducts = res.data.filter(
-          product => product.category === "Electrician"
+          product => product.category?.name === "Electrician"
         );
         setProduct(pestProducts);
       })

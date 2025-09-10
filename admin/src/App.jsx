@@ -16,9 +16,12 @@ import UI from './Pages/UI'
 import HomeUi from './Pages/HomeUi'
 import HomeCard from './Pages/HomeCard';
 import Allproducts from './Pages/Allproducts';
+import Category from './Pages/Category';
+import SubCategory from './Pages/SubCategory';
 import AboutUs from './Pages/AboutUs'
 import FirstCard from './Pages/FirstCard';
 import LongBanner from './Pages/LongBanner';
+import Video from './Pages/Video';
 function App() {
   return (
     <AuthProvider>
@@ -47,12 +50,16 @@ function App() {
             <Route path='firstCard' element={<FirstCard />} />
             <Route path='longBanner' element={<LongBanner />} />
             <Route path='all-products' element={<Allproducts />} />
+            <Route path='category' element={<Category />} />
+            <Route path='SubCategory' element={<SubCategory />} />
             <Route path='aboutUs' element={<AboutUs />} />
+            <Route path='video' element={<Video />} />
           </Route>
         </Routes>
       </Router>
     </AuthProvider>
   );
 }
+
 
 export default App;

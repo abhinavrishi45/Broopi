@@ -23,8 +23,6 @@ export const addToCart = createAsyncThunk(
     }
   }
 );
-
-
 export const updateQuantity = createAsyncThunk("cart/updateQuantity", async ({ userId, productId, action }) => {
   const res = await axios.patch(`${API_URL}/update`, { userId, productId, action });
   return res.data.items || [];
@@ -41,7 +39,7 @@ export const getProductsByCategory = async (category) => {
   const res = await axios.get(`http://localhost:5000/api/product/allproducts/category/${category}`);
   return res.data;
 };
-// const removeFromCart = createAsyncThunk("cart/remove", ... )  // optional
+// const removeFromCart = createAsyncThunk("cart/remove", ... )  
 
 const cartSlice = createSlice({
   name: "cart",

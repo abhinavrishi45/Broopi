@@ -47,7 +47,6 @@ const App = () => {
     setShowLogin(true);
   }
 
-
   const handleLoginSuccess = (userData) => {
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);

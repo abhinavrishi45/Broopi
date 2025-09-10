@@ -1,15 +1,13 @@
-const mongoose = require("mongoose");
-const orderSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  items: [
-    {
-      productId: { type: mongoose.Schema.Types.ObjectId, ref: "AllProduct" },
-      quantity: Number,
-      price: String,
-    }
-  ],
-  orderId: { type: String, unique: true },
-  createdAt:{type:String, default: Date.now}
+// const mongoose = require("mongoose");
+// const { v4: uuidv4 } = require('uuid');
 
-});
-module.exports = mongoose.model("Order", orderSchema);
+// const orderSchema = new mongoose.Schema({
+//   userId: { type: String, required: true },
+//   items: [{
+//     price: { type: Number }
+//   }],
+//   totalAmount: { type: Number, required: true },
+//   razorpayOrderId: String,
+//   orderId: { type: String, unique: true },
+// });
+// module.exports = mongoose.model("Order", orderSchema);

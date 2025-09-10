@@ -36,17 +36,46 @@ const storagelongBanner = multer.diskStorage({
 
   }
 });
+const storageCategory = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../uploads/Category'));
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+
+  }
+});
+const storagesubCategory = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../uploads/subCategory'));
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+
+  }
+});
+const VideoStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../uploads/Video'));
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
 const uploadAllProducts = multer({ storage: storageAllProducts });
 const uploadHomeCard = multer({ storage: storageHomeCard });
-const uploadFirstCard = multer({
-  storage:
-    storageFirstCard
-});
-const uploadlongBanner = multer({storage : storagelongBanner});
+const uploadFirstCard = multer({ storage: storageFirstCard });
+const uploadCategory = multer({ storage: storageCategory });
+const uploadlongBanner = multer({ storage: storagelongBanner });
+const uploadsubCategory = multer({ storage: storagesubCategory });
+const uploadVideo = multer({ storage: VideoStorage });
 
 module.exports = {
   uploadAllProducts,
   uploadHomeCard,
   uploadFirstCard,
-  uploadlongBanner
+  uploadlongBanner,
+  uploadCategory,
+  uploadsubCategory,
+  uploadVideo,
 };
